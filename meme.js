@@ -14,9 +14,25 @@ let subreddits = ["crypto", "wholesome", "bitcoin", "ethereum", "kaspa", "flux",
 let getMeme = () => {
     // find random subreddit from array
 
-    let randomSubreddit = subreddits[Math.floor(Math.random() * 10 )]
+    let randomSubreddit = subreddits[Math.floor(Math.random() * subreddits.length )]
 
-    console.log(randomSubreddit)
+    // fetch data
+
+    fetch(url + randomSubreddit)
+    .then(x => x.json())
+    .then(data => {
+        
+
+        let memeImg = new Image();
+// Display meme image and title after image loads
+        memeImg.onload = () => {
+            meme.src = data.url
+            title.innerHTML = data.title;
+        }
+        memeImg.src = data.url;
+    })
+
+
 }
 
 getMeme()
